@@ -2,27 +2,22 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
 // Code Splitting
-export const IndexPage = lazy(() => import('../pages/app'));
-export const BlogPage = lazy(() => import('../pages/blog'));
-export const UserPage = lazy(() => import('../pages/user'));
-export const LoginPage = lazy(() => import('../pages/login'));
-export const ProductsPage = lazy(() => import('../pages/products'));
-export const Page404 = lazy(() => import('../pages/page-not-found'));
+const DashboardPage = lazy(() => import('../Components/Page/Dashboard/DashboardPage'));
+const Login = lazy(() => import('../Components/Page/Login/Login'));
+const Signup = lazy(() => import('../Components/Page/SignUp/Signup'));
+const Page404 = lazy(() => import('../Components/Page/page-not-found/404'));
 
-
-const AppRoutes = () => {
+const AppRoutes: React.FC = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<DashboardPage />} />
+          
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
-          <Route path="/Admin-Dashboard" element={<Dashboard />} />
-          {/* <Route path="/product" element={<Products />} />
-        <Route path="/product/:id" element={<Product />} />
-        <Route path="*" element={<PageNotFound />} />
-        <Route path="/product/*" element={<PageNotFound />} /> */}
+          <Route path="404" element={<Page404 />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
     </Suspense>
@@ -30,3 +25,10 @@ const AppRoutes = () => {
 };
 
 export default AppRoutes;
+
+
+          {/* Uncomment and update these routes as needed */}
+          {/* <Route path="/product" element={<Products />} />
+          <Route path="/product/:id" element={<Product />} />
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="/product/*" element={<PageNotFound />} /> */}

@@ -1,15 +1,15 @@
-import { Helmet } from "react-helmet-async";
+import { Helmet } from 'react-helmet-async';
 
 // ----------------------------------------------------------------------
 
-const SignupPage = () => {
+export default function NotFoundPage() {
   return (
     <>
       <Helmet>
-        <title> Signup </title>
+        <title> 404 Page Not Found </title>
       </Helmet>
+
+ 
     </>
   );
-};
-
-export default SignupPage;
+}
