@@ -1,15 +1,15 @@
-import AppRoutes from "./Routes/AppRoutes"
+import AppRoutes from "./Routes/AppRoutes";
 import { useScrollToTop } from "./Hooks/use-scroll-to-top";
-import './global.css'
+import "./global.css";
 
-const App: React.FC = () => {
+const App = () => {
   useScrollToTop();
 
   return (
-   <>
-   <AppRoutes/>
-   </>
-  )
-}
+    <>
+      <AppRoutes />
+    </>
+  );
+};
 
-export default App
+export default App;
