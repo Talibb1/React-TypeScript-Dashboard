@@ -8,9 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 
-import { bgBlur } from './theme/css';
+import { bgBlur } from '../../../Theme/css';
 
-import Iconify from './components/iconify';
+import Iconify from '../../UI/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +30,6 @@ const StyledSearchbar = styled('div')(({ theme }) => ({
   alignItems: 'center',
   height: HEADER_MOBILE,
   padding: theme.spacing(0, 3),
-  boxShadow: theme.customShadows.z8,
   [theme.breakpoints.up('md')]: {
     height: HEADER_DESKTOP,
     padding: theme.spacing(0, 5),

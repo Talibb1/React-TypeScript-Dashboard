@@ -1,20 +1,23 @@
-import PropTypes from 'prop-types';
 import { forwardRef, useCallback } from 'react';
-
 import Stack from '@mui/material/Stack';
-import { alpha } from '@mui/material/styles';
+import { alpha, Theme } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
-
 import Iconify from '../iconify';
 
-// ----------------------------------------------------------------------
+interface ColorPickerProps {
+  colors: string[] | string; // Accepts either a string or an array of strings
+  selected: string | string[]; // Accepts either a string or an array of strings
+  onSelectColor: (color: string | string[]) => void; // Function to handle color selection
+  limit?: number | 'auto'; // Optional prop defining the limit of displayed colors
+  sx?: React.CSSProperties; // Optional prop for additional custom styles
+}
 
-const ColorPicker = forwardRef(
+const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
   ({ colors, selected, onSelectColor, limit = 'auto', sx, ...other }, ref) => {
     const singleSelect = typeof selected === 'string';
 
     const handleSelect = useCallback(
-      (color) => {
+      (color: string) => {
         if (singleSelect) {
           if (color !== selected) {
             onSelectColor(color);
@@ -45,7 +48,7 @@ const ColorPicker = forwardRef(
         }}
         {...other}
       >
-        {colors.map((color) => {
+        {Array.isArray(colors) ? colors.map((color) => {
           const hasSelected = singleSelect ? selected === color : selected.includes(color);
 
           return (
@@ -68,12 +71,12 @@ const ColorPicker = forwardRef(
                   height: 20,
                   bgcolor: color,
                   borderRadius: '50%',
-                  border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.16)}`,
+                  border: (theme: Theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.16)}`,
                   ...(hasSelected && {
                     transform: 'scale(1.3)',
                     boxShadow: `4px 4px 8px 0 ${alpha(color, 0.48)}`,
                     outline: `solid 2px ${alpha(color, 0.08)}`,
-                    transition: (theme) =>
+                    transition: (theme: Theme) =>
                       theme.transitions.create('all', {
                         duration: theme.transitions.duration.shortest,
                       }),
@@ -84,8 +87,8 @@ const ColorPicker = forwardRef(
                   width={hasSelected ? 12 : 0}
                   icon="eva:checkmark-fill"
                   sx={{
-                    color: (theme) => theme.palette.getContrastText(color),
-                    transition: (theme) =>
+                    color: (theme: Theme) => theme.palette.getContrastText(color),
+                    transition: (theme: Theme) =>
                       theme.transitions.create('all', {
                         duration: theme.transitions.duration.shortest,
                       }),
@@ -94,18 +97,10 @@ const ColorPicker = forwardRef(
               </Stack>
             </ButtonBase>
           );
-        })}
+        }) : null}
       </Stack>
     );
   }
 );
-
-ColorPicker.propTypes = {
-  colors: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  limit: PropTypes.number,
-  onSelectColor: PropTypes.func,
-  selected: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-  sx: PropTypes.object,
-};
 
 export default ColorPicker;

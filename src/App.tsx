@@ -1,9 +1,9 @@
 import AppRoutes from "./Routes/AppRoutes";
-import { useScrollToTop } from "./Hooks/use-scroll-to-top";
+// import { useScrollToTop } from "./Hooks/use-scroll-to-top";
 import "./global.css";
 
 const App = () => {
-  useScrollToTop();
+  // useScrollToTop();
 
   return (
     <>

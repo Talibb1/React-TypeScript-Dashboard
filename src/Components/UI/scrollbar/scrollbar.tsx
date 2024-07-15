@@ -1,44 +1,47 @@
-import PropTypes from 'prop-types';
-import { memo, forwardRef } from 'react';
-
+import { memo, forwardRef, ReactNode} from 'react';
 import Box from '@mui/material/Box';
+import { SxProps } from '@mui/system';
+import { Theme } from '@mui/material/styles';
 
 import { StyledScrollbar, StyledRootScrollbar } from './styles';
 
-// ----------------------------------------------------------------------
 
-const Scrollbar = forwardRef(({ children, sx, ...other }, ref) => {
-  const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
+interface ScrollbarProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+  sx?: SxProps<Theme>;
+}
 
-  const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+const ScrollbarComponent = forwardRef<HTMLDivElement, ScrollbarProps>(
+  ({ children, sx, ...other }, ref) => {
+    const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
 
-  if (mobile) {
+    const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+
+    if (mobile) {
+      return (
+        <Box ref={ref} sx={{ overflow: 'auto', ...sx }} {...other}>
+          {children}
+        </Box>
+      );
+    }
+
     return (
-      <Box ref={ref} sx={{ overflow: 'auto', ...sx }} {...other}>
-        {children}
-      </Box>
+      <StyledRootScrollbar>
+        <StyledScrollbar
+          scrollableNodeProps={{
+            ref,
+          }}
+          clickOnTrack={false}
+          sx={sx}
+          {...other}
+        >
+          {children}
+        </StyledScrollbar>
+      </StyledRootScrollbar>
     );
   }
+);
 
-  return (
-    <StyledRootScrollbar>
-      <StyledScrollbar
-        scrollableNodeProps={{
-          ref,
-        }}
-        clickOnTrack={false}
-        sx={sx}
-        {...other}
-      >
-        {children}
-      </StyledScrollbar>
-    </StyledRootScrollbar>
-  );
-});
+const Scrollbar = memo(ScrollbarComponent);
 
-Scrollbar.propTypes = {
-  children: PropTypes.node,
-  sx: PropTypes.object,
-};
-
-export default memo(Scrollbar);
+export default Scrollbar;

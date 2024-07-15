@@ -1,21 +1,27 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
+
 // Code Splitting
 const DashboardPage = lazy(() => import('../Components/Page/Dashboard/DashboardPage'));
-const Login = lazy(() => import('../Components/Page/Login/Login'));
-const Signup = lazy(() => import('../Components/Page/SignUp/Signup'));
-const Page404 = lazy(() => import('../Components/Page/page-not-found/404'));
+const User = lazy(() => import('../Components/Page/Dashboard/DashboardPage'));
+const Product = lazy(() => import('../Components/Page/Dashboard/DashboardPage'));
+const Blog = lazy(() => import('../Components/Page/Dashboard/DashboardPage'));
+const LoginPage = lazy(() => import('../Components/Page/Login/LoginPage'));
+const Signup = lazy(() => import('../Components/Page/SignUp/SignupPage'));
+const Page404 = lazy(() => import('../Components/Page/page-not-found/not-found-page'));
 
 const AppRoutes: React.FC = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<DashboardPage />} />
-          
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Signup" element={<Signup />} />
+          <Route path="User" element={<User />} />
+          <Route path="Product" element={<Product />} />
+          <Route path="Blog" element={<Blog />} />
+          <Route path="Login" element={<LoginPage />} />
+          <Route path="Signup" element={<Signup />} />
           <Route path="404" element={<Page404 />} />
           <Route path="*" element={<Page404 />} />
         </Routes>

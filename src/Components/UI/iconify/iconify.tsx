@@ -1,12 +1,16 @@
-import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 import { Icon } from '@iconify/react';
+import Box, { BoxProps } from '@mui/material/Box';
+import { SxProps } from '@mui/system';
+import { Theme } from '@mui/material/styles';
 
-import Box from '@mui/material/Box';
+interface IconifyProps extends BoxProps {
+  icon: string;
+  width?: number;
+  sx?: SxProps<Theme>;
+}
 
-// ----------------------------------------------------------------------
-
-const Iconify = forwardRef(({ icon, width = 20, sx, ...other }, ref) => (
+const Iconify = forwardRef<SVGElement, IconifyProps>(({ icon, width = 20, sx, ...other }, ref) => (
   <Box
     ref={ref}
     component={Icon}
@@ -16,11 +20,5 @@ const Iconify = forwardRef(({ icon, width = 20, sx, ...other }, ref) => (
     {...other}
   />
 ));
-
-Iconify.propTypes = {
-  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  sx: PropTypes.object,
-  width: PropTypes.number,
-};
 
 export default Iconify;

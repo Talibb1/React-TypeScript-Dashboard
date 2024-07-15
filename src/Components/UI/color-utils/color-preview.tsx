@@ -1,14 +1,15 @@
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { alpha } from '@mui/material/styles';
+import { alpha, Theme } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
+interface ColorPreviewProps {
+  colors: string[];
+  limit?: number;
+  sx?: React.CSSProperties;
+}
 
-export default function ColorPreview({ colors, limit = 3, sx }) {
+const ColorPreview: React.FC<ColorPreviewProps> = ({ colors, limit = 3, sx }) => {
   const renderColors = colors.slice(0, limit);
-
   const remainingColor = colors.length - limit;
 
   return (
@@ -22,8 +23,8 @@ export default function ColorPreview({ colors, limit = 3, sx }) {
             height: 16,
             bgcolor: color,
             borderRadius: '50%',
-            border: (theme) => `solid 2px ${theme.palette.background.paper}`,
-            boxShadow: (theme) => `inset -1px 1px 2px ${alpha(theme.palette.common.black, 0.24)}`,
+            border: (theme: Theme) => `solid 2px ${theme.palette.background.paper}`,
+            boxShadow: (theme: Theme) => `inset -1px 1px 2px ${alpha(theme.palette.common.black, 0.24)}`,
           }}
         />
       ))}
@@ -33,10 +34,6 @@ export default function ColorPreview({ colors, limit = 3, sx }) {
       )}
     </Stack>
   );
-}
-
-ColorPreview.propTypes = {
-  colors: PropTypes.arrayOf(PropTypes.string),
-  limit: PropTypes.number,
-  sx: PropTypes.object,
 };
+
+export default ColorPreview;

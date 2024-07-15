@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import { account } from '../../../../_mock/account';
+import { account } from '../../../_mock/account';
 
 // ----------------------------------------------------------------------
 
@@ -99,11 +99,12 @@ export default function AccountPopover() {
 
         {MENU_OPTIONS.map((option) => (
           <MenuItem key={option.label} onClick={handleClose}>
+            {option.icon}
             {option.label}
           </MenuItem>
         ))}
 
-        <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
+        <Divider sx={{ borderStyle: 'dashed', m: 0}} />
 
         <MenuItem
           disableRipple

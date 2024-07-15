@@ -14,8 +14,8 @@ import {
 import { Notification } from './Types';
 import { NOTIFICATIONS } from './NotificationsData';
 import NotificationItem from './NotificationItem';
-import Iconify from 'src/components/iconify';
-import Scrollbar from 'src/components/scrollbar';
+import Iconify from '../../UI/iconify';
+import Scrollbar from '../../UI/scrollbar';
 
 export default function NotificationsPopover() {
   const [notifications, setNotifications] = useState<Notification[]>(NOTIFICATIONS);

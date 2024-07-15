@@ -1,32 +1,24 @@
-import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
-
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import { useTheme } from '@mui/material/styles';
+import { SxProps, useTheme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 
-import { RouterLink } from 'src/routes/components';
+import { RouterLink } from '../../../Routes/router-link';
 
 // ----------------------------------------------------------------------
 
-const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
+interface LogoProps extends BoxProps {
+  disabledLink?: boolean;
+  sx?: SxProps<Theme>;
+}
+
+const Logo = forwardRef<HTMLDivElement, LogoProps>(({ disabledLink = false, sx, ...other }, ref) => {
   const theme = useTheme();
 
   const PRIMARY_LIGHT = theme.palette.primary.light;
-
   const PRIMARY_MAIN = theme.palette.primary.main;
-
   const PRIMARY_DARK = theme.palette.primary.dark;
-
-  // OR using local (public folder)
-  // -------------------------------------------------------
-  // const logo = (
-  //   <Box
-  //     component="img"
-  //     src="/logo/logo_single.svg" => your path
-  //     sx={{ width: 40, height: 40, cursor: 'pointer', ...sx }}
-  //   />
-  // );
 
   const logo = (
     <Box
@@ -46,18 +38,15 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
             <stop offset="0%" stopColor={PRIMARY_DARK} />
             <stop offset="100%" stopColor={PRIMARY_MAIN} />
           </linearGradient>
-
           <linearGradient id="BG2" x1="50%" x2="50%" y1="0%" y2="100%">
             <stop offset="0%" stopColor={PRIMARY_LIGHT} />
             <stop offset="100%" stopColor={PRIMARY_MAIN} />
           </linearGradient>
-
           <linearGradient id="BG3" x1="50%" x2="50%" y1="0%" y2="100%">
             <stop offset="0%" stopColor={PRIMARY_LIGHT} />
             <stop offset="100%" stopColor={PRIMARY_MAIN} />
           </linearGradient>
         </defs>
-
         <g fill={PRIMARY_MAIN} fillRule="evenodd" stroke="none" strokeWidth="1">
           <path
             fill="url(#BG1)"
@@ -81,15 +70,10 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
   }
 
   return (
-    <Link component={RouterLink} href="/" sx={{ display: 'contents' }}>
+    <Link component={RouterLink} to="/" sx={{ display: 'contents' }}>
       {logo}
     </Link>
   );
 });
-
-Logo.propTypes = {
-  disabledLink: PropTypes.bool,
-  sx: PropTypes.object,
-};
 
 export default Logo;

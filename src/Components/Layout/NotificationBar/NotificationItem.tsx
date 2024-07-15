@@ -1,8 +1,8 @@
 import { Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 import { Notification } from './Types';
-import { renderContent } from './renderContent';
-import Iconify from '../../../components/iconify';
-import { fToNow } from '../../../../../utils/format-time';
+import { renderContent } from './RenderContent';
+import Iconify from '../../UI/iconify';
+import { fToNow } from '../../../utils/format-time';
 
 interface NotificationItemProps {
   notification: Notification;
@@ -41,7 +41,7 @@ export default function NotificationItem({ notification }: NotificationItemProps
             {fToNow(notification.createdAt)}
           </Typography>
         }
-      />
-    </ListItemText>
+        />
+        </ListItemButton>
   );
 }

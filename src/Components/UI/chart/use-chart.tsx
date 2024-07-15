@@ -1,13 +1,12 @@
 import merge from 'lodash/merge';
-
-import { alpha, useTheme } from '@mui/material/styles';
-
-import { useResponsive } from 'src/hooks/use-responsive';
+import { alpha, useTheme, Theme } from '@mui/material/styles';
+import { ApexOptions } from 'apexcharts';
+import { useResponsive } from '../../../Hooks/use-responsive';
 
 // ----------------------------------------------------------------------
 
-export default function useChart(options) {
-  const theme = useTheme();
+export default function useChart(options: ApexOptions): ApexOptions {
+  const theme = useTheme<Theme>();
 
   const smUp = useResponsive('up', 'sm');
 
@@ -15,20 +14,20 @@ export default function useChart(options) {
     show: true,
     label: 'Total',
     color: theme.palette.text.secondary,
-    fontSize: theme.typography.subtitle2.fontSize,
+    fontSize: theme.typography.subtitle2.fontSize as string,
     fontWeight: theme.typography.subtitle2.fontWeight,
-    lineHeight: theme.typography.subtitle2.lineHeight,
+    lineHeight: theme.typography.subtitle2.lineHeight as string,
   };
 
   const LABEL_VALUE = {
     offsetY: 8,
     color: theme.palette.text.primary,
-    fontSize: theme.typography.h3.fontSize,
+    fontSize: theme.typography.h3.fontSize as string,
     fontWeight: theme.typography.h3.fontWeight,
-    lineHeight: theme.typography.h3.lineHeight,
+    lineHeight: theme.typography.h3.lineHeight as string,
   };
 
-  const baseOptions = {
+  const baseOptions: ApexOptions = {
     // Colors
     colors: [
       theme.palette.primary.main,
@@ -37,9 +36,9 @@ export default function useChart(options) {
       theme.palette.error.main,
       theme.palette.success.main,
       theme.palette.warning.dark,
-      theme.palette.success.darker,
+      theme.palette.success.dark,
       theme.palette.info.dark,
-      theme.palette.info.darker,
+      theme.palette.info.dark,
     ],
 
     // Chart
@@ -125,7 +124,7 @@ export default function useChart(options) {
     // Legend
     legend: {
       show: true,
-      fontSize: 13,
+      fontSize: '13px',
       position: 'top',
       horizontalAlign: 'right',
       markers: {
