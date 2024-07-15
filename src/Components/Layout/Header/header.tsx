@@ -13,9 +13,10 @@ import Iconify from '../../UI/iconify';
 
 import Searchbar from '../SearchBar/searchbar';
 import { NAV, HEADER } from './config-layout';
-import AccountPopover from '../Common/account-popover';
-import LanguagePopover from '../Common/language-popover';
+import AccountPopover from '../Account/account-popover';
+import LanguagePopover from '../LanguageBar/language-popover';
 import NotificationsPopover from '../NotificationBar/NotificationsPopover';
+import Setting from '../Settings/Setting';
 
 // ----------------------------------------------------------------------
 
@@ -42,6 +43,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenNav }) => {
 
       <Stack direction="row" alignItems="center" spacing={1}>
         <LanguagePopover />
+        <Setting/>
         <NotificationsPopover />
         <AccountPopover />
       </Stack>

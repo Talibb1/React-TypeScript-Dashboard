@@ -64,7 +64,7 @@ export default function Searchbar() {
               autoFocus
               fullWidth
               disableUnderline
-              placeholder="Search…"
+              placeholder="Search..."
               startAdornment={
                 <InputAdornment position="start">
                   <Iconify

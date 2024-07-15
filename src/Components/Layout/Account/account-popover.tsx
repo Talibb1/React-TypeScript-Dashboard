@@ -10,28 +10,33 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { account } from '../../../_mock/account';
-
+import homeFill from '@iconify/icons-eva/home-fill'; // Example Iconify icon
+import personFill from '@iconify/icons-eva/person-fill'; // Example Iconify icon
+import settings2Fill from '@iconify/icons-eva/settings-2-fill';
+import { Icon } from '@iconify/react'; 
 // ----------------------------------------------------------------------
 
 interface MenuOption {
   label: string;
-  icon: string;
+   icon: any; 
 }
+
 
 const MENU_OPTIONS: MenuOption[] = [
   {
     label: 'Home',
-    icon: 'eva:home-fill',
+    icon: homeFill,
   },
   {
     label: 'Profile',
-    icon: 'eva:person-fill',
+    icon: personFill,
   },
   {
     label: 'Settings',
-    icon: 'eva:settings-2-fill',
+    icon: settings2Fill,
   },
 ];
+
 
 // ----------------------------------------------------------------------
 
@@ -99,7 +104,7 @@ export default function AccountPopover() {
 
         {MENU_OPTIONS.map((option) => (
           <MenuItem key={option.label} onClick={handleClose}>
-            {option.icon}
+             <Icon icon={option.icon} width={24} height={24} /> 
             {option.label}
           </MenuItem>
         ))}

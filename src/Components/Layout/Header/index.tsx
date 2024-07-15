@@ -1,7 +1,7 @@
 import { useState, ReactNode } from 'react';
 import Box from '@mui/material/Box';
 
-import Nav from '../Navbar/navbar';
+import Nav from '../Sidebar/Sidebar';
 import Main from './main';
 import Header from './header';
 
