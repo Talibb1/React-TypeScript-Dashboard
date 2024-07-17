@@ -1,14 +1,25 @@
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 
-import Chart, { useChart } from '../../../UI/chart';
+import Chart, { useChart, ChartOptions, SeriesType } from '../../../UI/chart'; // Adjust imports as necessary
 
 // ----------------------------------------------------------------------
 
-export default function AppWebsiteVisits({ title, subheader, chart, ...other }) {
+interface ChartData {
+  labels: string[];
+  colors: string[];
+  series: SeriesType[];
+  options?: ChartOptions;
+}
+
+interface AppWebsiteVisitsProps {
+  title: string;
+  subheader?: string;
+  chart: ChartData;
+}
+
+const AppWebsiteVisits: React.FC<AppWebsiteVisitsProps> = ({ title, subheader, chart, ...other }) => {
   const { labels, colors, series, options } = chart;
 
   const chartOptions = useChart({
@@ -56,10 +67,6 @@ export default function AppWebsiteVisits({ title, subheader, chart, ...other }) 
       </Box>
     </Card>
   );
-}
-
-AppWebsiteVisits.propTypes = {
-  chart: PropTypes.object,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
 };
+
+export default AppWebsiteVisits;

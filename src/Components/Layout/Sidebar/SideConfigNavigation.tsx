@@ -19,7 +19,7 @@ const navConfig: NavConfigItem[] = [
   },
   {
     title: 'user',
-    path: '/User',
+    path: 'User',
     icon: icon('ic_user'),
   },
   {
@@ -39,17 +39,17 @@ const navConfig: NavConfigItem[] = [
     children: [
       {
         title: 'User Profile',
-        path: '/login',
+        path: '/User-Profile',
         icon: icon('ic_account'),
       },
       {
         title: 'Edit Profile',
-        path: '/auth/signup',
+        path: '/Edit-Profile',
         icon: icon('ic_edit'),
       },
       {
         title: 'Change Password',
-        path: '/auth/forget-password',
+        path: '/Change-Password',
         icon: icon('ic_password'),
       },
     ],
@@ -66,7 +66,7 @@ const navConfig: NavConfigItem[] = [
       },
       {
         title: 'Signup',
-        path: '/auth/signup',
+        path: '/Signup',
         icon: icon('ic_sign'),
       },
       {

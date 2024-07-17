@@ -1,17 +1,13 @@
-import PropTypes from 'prop-types';
-
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import { styled, useTheme } from '@mui/material/styles';
-
 import { fNumber } from '../../../../utils/format-number';
-
 import Chart, { useChart } from '../../../UI/chart';
 
 // ----------------------------------------------------------------------
 
 const CHART_HEIGHT = 400;
-
 const LEGEND_HEIGHT = 72;
 
 const StyledChart = styled(Chart)(({ theme }) => ({
@@ -28,7 +24,24 @@ const StyledChart = styled(Chart)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function AppCurrentVisits({ title, subheader, chart, ...other }) {
+interface ChartData {
+  value: number;
+  label: string;
+}
+
+interface ChartOptions {
+  colors: string[];
+  series: ChartData[];
+  options?: any; // Adjust this based on the actual structure of the options
+}
+
+interface AppCurrentVisitsProps {
+  title: string;
+  subheader?: string;
+  chart: ChartOptions;
+}
+
+const AppCurrentVisits: React.FC<AppCurrentVisitsProps> = ({ title, subheader, chart, ...other }) => {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
@@ -60,9 +73,9 @@ export default function AppCurrentVisits({ title, subheader, chart, ...other }) 
     tooltip: {
       fillSeriesColor: false,
       y: {
-        formatter: (value) => fNumber(value),
+        formatter: (value: number) => fNumber(value),
         title: {
-          formatter: (seriesName) => `${seriesName}`,
+          formatter: (seriesName: string) => `${seriesName}`,
         },
       },
     },
@@ -92,10 +105,6 @@ export default function AppCurrentVisits({ title, subheader, chart, ...other }) 
       />
     </Card>
   );
-}
-
-AppCurrentVisits.propTypes = {
-  chart: PropTypes.object,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
 };
+
+export default AppCurrentVisits;

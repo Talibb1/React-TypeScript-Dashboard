@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-
+import React from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -16,7 +15,21 @@ import Scrollbar from '../../../UI/scrollbar';
 
 // ----------------------------------------------------------------------
 
-export default function AppNewsUpdate({ title, subheader, list, ...other }) {
+interface NewsItemProps {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  postedAt: Date;
+}
+
+interface AppNewsUpdateProps {
+  title: string;
+  subheader?: string;
+  list: NewsItemProps[];
+}
+
+const AppNewsUpdate: React.FC<AppNewsUpdateProps> = ({ title, subheader, list, ...other }) => {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -42,17 +55,11 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
       </Box>
     </Card>
   );
-}
-
-AppNewsUpdate.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  list: PropTypes.array.isRequired,
 };
 
 // ----------------------------------------------------------------------
 
-function NewsItem({ news }) {
+const NewsItem: React.FC<{ news: NewsItemProps }> = ({ news }) => {
   const { image, title, description, postedAt } = news;
 
   return (
@@ -79,13 +86,6 @@ function NewsItem({ news }) {
       </Typography>
     </Stack>
   );
-}
-
-NewsItem.propTypes = {
-  news: PropTypes.shape({
-    image: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    postedAt: PropTypes.instanceOf(Date),
-  }),
 };
+
+export default AppNewsUpdate;

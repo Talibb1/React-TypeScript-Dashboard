@@ -16,7 +16,6 @@ import AppTrafficBySite from './overview/app-traffic-by-site';
 import AppCurrentSubject from './overview/app-current-subject';
 import AppConversionRates from './overview/app-conversion-rates';
 
-// Define types for the props where necessary
 interface AppWidgetSummaryProps {
   title: string;
   total: number;

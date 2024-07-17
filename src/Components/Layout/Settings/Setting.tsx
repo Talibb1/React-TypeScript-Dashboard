@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -14,7 +15,7 @@ const colors = [
   { name: 'Red', hex: '#f44336' },
   { name: 'Green', hex: '#4caf50' },
   { name: 'Blue', hex: '#2196f3' },
-  { name: 'orange', hex: '#ff763b' },
+  { name: 'Orange', hex: '#ff763b' },
   { name: 'Purple', hex: '#9c27b0' },
 ];
 
@@ -49,14 +50,25 @@ export default function SwipeableTemporaryDrawer() {
 
   const list = (anchor: keyof typeof state) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 300 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem>
-          <ListItemText primary="Sidenav Colors" />
+        <ListItem
+          sx={{
+            borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+          }}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="h6" fontWeight="bold">
+                Sidenav Colors
+              </Typography>
+            }
+          />
         </ListItem>
         <Box
           sx={{
@@ -71,7 +83,7 @@ export default function SwipeableTemporaryDrawer() {
               <Box
                 sx={{
                   width: 60,
-                  height: 20,
+                  height: 30,
                   backgroundColor: color.hex,
                   borderRadius: '50%',
                   mb: 1.5,
@@ -94,6 +106,12 @@ export default function SwipeableTemporaryDrawer() {
         open={state.right}
         onClose={toggleDrawer('right', false)}
         onOpen={toggleDrawer('right', true)}
+        PaperProps={{
+          sx: {
+            backgroundColor: '	rgba(247, 247, 247, 0.09)', // Semi-transparent background
+            backdropFilter: 'blur(9px)', // Optional: add a blur effect
+          },
+        }}
       >
         {list('right')}
       </SwipeableDrawer>

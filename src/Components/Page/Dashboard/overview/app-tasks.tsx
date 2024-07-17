@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-
+import { useState, MouseEvent } from 'react';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Popover from '@mui/material/Popover';
@@ -14,10 +12,21 @@ import Iconify from '../../../UI/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function AnalyticsTasks({ title, subheader, list, ...other }) {
-  const [selected, setSelected] = useState(['2']);
+interface Task {
+  id: string;
+  name: string;
+}
 
-  const handleClickComplete = (taskId) => {
+interface AnalyticsTasksProps {
+  title: string;
+  subheader?: string;
+  list: Task[];
+}
+
+const AnalyticsTasks: React.FC<AnalyticsTasksProps> = ({ title, subheader, list, ...other }) => {
+  const [selected, setSelected] = useState<string[]>(['2']);
+
+  const handleClickComplete = (taskId: string) => {
     const tasksCompleted = selected.includes(taskId)
       ? selected.filter((value) => value !== taskId)
       : [...selected, taskId];
@@ -39,20 +48,20 @@ export default function AnalyticsTasks({ title, subheader, list, ...other }) {
       ))}
     </Card>
   );
-}
-
-AnalyticsTasks.propTypes = {
-  list: PropTypes.array,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
 };
 
 // ----------------------------------------------------------------------
 
-function TaskItem({ task, checked, onChange }) {
-  const [open, setOpen] = useState(null);
+interface TaskItemProps {
+  task: Task;
+  checked: boolean;
+  onChange: () => void;
+}
 
-  const handleOpenMenu = (event) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, checked, onChange }) => {
+  const [open, setOpen] = useState<HTMLElement | null>(null);
+
+  const handleOpenMenu = (event: MouseEvent<HTMLElement>) => {
     setOpen(event.currentTarget);
   };
 
@@ -138,10 +147,6 @@ function TaskItem({ task, checked, onChange }) {
       </Popover>
     </>
   );
-}
-
-TaskItem.propTypes = {
-  checked: PropTypes.bool,
-  onChange: PropTypes.func,
-  task: PropTypes.object,
 };
+
+export default AnalyticsTasks;

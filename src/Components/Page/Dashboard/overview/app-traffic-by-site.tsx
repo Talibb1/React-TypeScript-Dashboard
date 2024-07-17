@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Paper from '@mui/material/Paper';
@@ -10,7 +8,19 @@ import { fShortenNumber } from '../../../../utils/format-number';
 
 // ----------------------------------------------------------------------
 
-export default function AppTrafficBySite({ title, subheader, list, ...other }) {
+interface Site {
+  name: string;
+  icon: React.ReactNode; // Replace with appropriate type for icon
+  value: number;
+}
+
+interface AppTrafficBySiteProps {
+  title: string;
+  subheader?: string;
+  list: Site[];
+}
+
+const AppTrafficBySite: React.FC<AppTrafficBySiteProps> = ({ title, subheader, list, ...other }) => {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -41,10 +51,6 @@ export default function AppTrafficBySite({ title, subheader, list, ...other }) {
       </Box>
     </Card>
   );
-}
-
-AppTrafficBySite.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  list: PropTypes.array.isRequired,
 };
+
+export default AppTrafficBySite;

@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-
+import React from 'react';
 import Card from '@mui/material/Card';
 import Timeline from '@mui/lab/Timeline';
 import TimelineDot from '@mui/lab/TimelineDot';
@@ -14,11 +13,23 @@ import { fDateTime } from '../../../../utils/format-time';
 
 // ----------------------------------------------------------------------
 
-export default function AnalyticsOrderTimeline({ title, subheader, list, ...other }) {
+interface OrderItemProps {
+  id: string;
+  type: string;
+  title: string;
+  time: Date;
+}
+
+interface AnalyticsOrderTimelineProps {
+  title: string;
+  subheader?: string;
+  list: OrderItemProps[];
+}
+
+const AnalyticsOrderTimeline: React.FC<AnalyticsOrderTimelineProps> = ({ title, subheader, list, ...other }) => {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
-
       <Timeline
         sx={{
           m: 0,
@@ -35,17 +46,16 @@ export default function AnalyticsOrderTimeline({ title, subheader, list, ...othe
       </Timeline>
     </Card>
   );
-}
-
-AnalyticsOrderTimeline.propTypes = {
-  list: PropTypes.array,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
 };
 
 // ----------------------------------------------------------------------
 
-function OrderItem({ item, lastTimeline }) {
+interface OrderItemComponentProps {
+  item: OrderItemProps;
+  lastTimeline: boolean;
+}
+
+const OrderItem: React.FC<OrderItemComponentProps> = ({ item, lastTimeline }) => {
   const { type, title, time } = item;
   return (
     <TimelineItem>
@@ -61,19 +71,14 @@ function OrderItem({ item, lastTimeline }) {
         />
         {lastTimeline ? null : <TimelineConnector />}
       </TimelineSeparator>
-
       <TimelineContent>
         <Typography variant="subtitle2">{title}</Typography>
-
         <Typography variant="caption" sx={{ color: 'text.disabled' }}>
           {fDateTime(time)}
         </Typography>
       </TimelineContent>
     </TimelineItem>
   );
-}
-
-OrderItem.propTypes = {
-  item: PropTypes.object,
-  lastTimeline: PropTypes.bool,
 };
+
+export default AnalyticsOrderTimeline;
