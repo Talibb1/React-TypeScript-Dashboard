@@ -6,13 +6,12 @@ import { useResponsive } from "../../../Hooks/use-responsive";
 import { NAV } from "../Header/config-layout";
 import { renderContent } from "./SideContent";
 
-
 interface NavProps {
   openNav: boolean;
   onCloseNav: () => void;
 }
 
-const Nav: React.FC<NavProps> = ({ openNav, onCloseNav }) => {
+const Sidebar: React.FC<NavProps> = ({ openNav, onCloseNav }) => {
   const pathname = usePathname();
   const upLg = useResponsive("up", "lg");
 
@@ -61,4 +60,4 @@ const Nav: React.FC<NavProps> = ({ openNav, onCloseNav }) => {
   );
 };
 
-export default Nav;
+export default Sidebar;

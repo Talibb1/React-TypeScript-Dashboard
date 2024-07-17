@@ -24,12 +24,12 @@ const navConfig: NavConfigItem[] = [
   },
   {
     title: 'product',
-    path: '/Product',
+    path: 'Product',
     icon: icon('ic_cart'),
   },
   {
     title: 'blog',
-    path: '/Blog',
+    path: 'Blog',
     icon: icon('ic_blog'),
   },
   {
@@ -79,22 +79,22 @@ const navConfig: NavConfigItem[] = [
 
   {
     title: 'Chat',
-    path: '/Chat',
+    path: 'Chat',
     icon: icon('ic_chat'),
   },
   {
     title: 'Mail',
-    path: '/Mail',
+    path: 'Mail',
     icon: icon('ic_mailbox'),
   },
   {
     title: 'Calender',
-    path: '/Calendar',
+    path: 'Calendar',
     icon: icon('ic_calendar'),
   },
   {
     title: 'Kanban',
-    path: '/Kanban',
+    path: 'Kanban',
     icon: icon('ic_kanban'),
   },
   {

@@ -1,11 +1,10 @@
 import { useState, ReactNode } from "react";
 import Box from "@mui/material/Box";
+import Sidebar from "../Sidebar";
+import Main from "./MainContent";
+import Header from "../Header/header";
 
-import Nav from "../Sidebar/Sidebar";
-import Main from "./main";
-import Header from "./header";
 
-// ----------------------------------------------------------------------
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -17,8 +16,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
       <Header onOpenNav={() => setOpenNav(true)} />
-
-      <Main>{children}</Main>
       <Box
         sx={{
           minHeight: 1,
@@ -26,7 +23,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           flexDirection: { xs: "column", lg: "row" },
         }}
       >
-        <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
+        <Sidebar openNav={openNav} onCloseNav={() => setOpenNav(false)} />
+        <Main>
+          {children}
+        </Main>
       </Box>
     </>
   );
