@@ -1,45 +1,46 @@
-import { useState, MouseEvent } from 'react';
-import {
-  Box,
-  List,
-  Badge,
-  Button,
-  Divider,
-  Tooltip,
-  Popover,
-  Typography,
-  IconButton,
-  ListSubheader,
-} from '@mui/material';
+import { useState, useMemo, useCallback, MouseEvent } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import ListSubheader from '@mui/material/ListSubheader';
+import IconButton from '@mui/material/IconButton';
+import Popover from '@mui/material/Popover';
+import Tooltip from '@mui/material/Tooltip';
+import Divider from '@mui/material/Divider';
+import Badge from '@mui/material/Badge';
+import List from '@mui/material/List';
+
 import { Notification } from './Types';
-import { NOTIFICATIONS } from './NotificationsData';
+import { NOTIFICATIONSDATA } from './NotificationsData';
 import NotificationItem from './NotificationItem';
 import Iconify from '../../UI/iconify';
 import Scrollbar from '../../UI/scrollbar';
 
 export default function NotificationsPopover() {
-  const [notifications, setNotifications] = useState<Notification[]>(NOTIFICATIONS);
-
-  const totalUnRead = notifications.filter((item) => item.isUnRead).length;
-
   const [open, setOpen] = useState<HTMLElement | null>(null);
+  const [notifications, setNotifications] = useState<Notification[]>(() => NOTIFICATIONSDATA);
 
-  const handleOpen = (event: MouseEvent<HTMLElement>) => {
+  const totalUnRead = useMemo(() => notifications.filter((item) => item.isUnRead).length, [notifications]);
+
+  const handleOpen = useCallback((event: MouseEvent<HTMLElement>) => {
     setOpen(event.currentTarget);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(null);
-  };
+  }, []);
 
-  const handleMarkAllAsRead = () => {
-    setNotifications(
-      notifications.map((notification) => ({
+  const handleMarkAllAsRead = useCallback(() => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.map((notification) => ({
         ...notification,
         isUnRead: false,
       }))
     );
-  };
+  }, []);
+
+  const newNotifications = useMemo(() => notifications.slice(0, 2), [notifications]);
+  const oldNotifications = useMemo(() => notifications.slice(2, 5), [notifications]);
 
   return (
     <>
@@ -91,7 +92,7 @@ export default function NotificationsPopover() {
               </ListSubheader>
             }
           >
-            {notifications.slice(0, 2).map((notification) => (
+            {newNotifications.map((notification) => (
               <NotificationItem key={notification.id} notification={notification} />
             ))}
           </List>
@@ -104,7 +105,7 @@ export default function NotificationsPopover() {
               </ListSubheader>
             }
           >
-            {notifications.slice(2, 5).map((notification) => (
+            {oldNotifications.map((notification) => (
               <NotificationItem key={notification.id} notification={notification} />
             ))}
           </List>

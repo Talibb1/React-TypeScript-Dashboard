@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useContext } from 'react';
+import { createContext, useState, ReactNode, useContext, useMemo } from 'react';
 
 interface ColorContextProps {
   primaryColor: string;
@@ -7,7 +7,7 @@ interface ColorContextProps {
 
 const ColorContext = createContext<ColorContextProps | undefined>(undefined);
 
-export const useColor = () => {
+export const useColor = (): ColorContextProps => {
   const context = useContext(ColorContext);
   if (!context) {
     throw new Error('useColor must be used within a ColorProvider');
@@ -16,10 +16,12 @@ export const useColor = () => {
 };
 
 export const ColorProvider = ({ children }: { children: ReactNode }) => {
-  const [primaryColor, setPrimaryColor] = useState('#f44336'); // Default color
+  const [primaryColor, setPrimaryColor] = useState('#f44336');
+
+  const value = useMemo(() => ({ primaryColor, setPrimaryColor }), [primaryColor]);
 
   return (
-    <ColorContext.Provider value={{ primaryColor, setPrimaryColor }}>
+    <ColorContext.Provider value={value}>
       {children}
     </ColorContext.Provider>
   );

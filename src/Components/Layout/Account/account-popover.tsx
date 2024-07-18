@@ -1,5 +1,4 @@
-import { useState, MouseEvent } from 'react';
-
+import { useState, MouseEvent, useCallback, memo } from 'react';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
@@ -8,19 +7,19 @@ import { alpha } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import { Icon, IconifyIcon } from '@iconify/react';
+import homeFill from '@iconify/icons-eva/home-fill';
+import personFill from '@iconify/icons-eva/person-fill';
+import settings2Fill from '@iconify/icons-eva/settings-2-fill';
 
 import { account } from '../../../_mock/account';
-import homeFill from '@iconify/icons-eva/home-fill'; // Example Iconify icon
-import personFill from '@iconify/icons-eva/person-fill'; // Example Iconify icon
-import settings2Fill from '@iconify/icons-eva/settings-2-fill';
-import { Icon } from '@iconify/react'; 
+
 // ----------------------------------------------------------------------
 
 interface MenuOption {
   label: string;
-   icon: any; 
+  icon: IconifyIcon;
 }
-
 
 const MENU_OPTIONS: MenuOption[] = [
   {
@@ -37,19 +36,25 @@ const MENU_OPTIONS: MenuOption[] = [
   },
 ];
 
-
 // ----------------------------------------------------------------------
 
+const AccountMenuItem = memo(({ option, onClick }: { option: MenuOption; onClick: () => void }) => (
+  <MenuItem key={option.label} onClick={onClick}>
+    <Icon icon={option.icon} width={24} height={24} />
+    {option.label}
+  </MenuItem>
+));
+
 export default function AccountPopover() {
-  const [open, setOpen] = useState<HTMLElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const handleOpen = (event: MouseEvent<HTMLElement>) => {
-    setOpen(event.currentTarget);
-  };
+  const handleOpen = useCallback((event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
 
-  const handleClose = () => {
-    setOpen(null);
-  };
+  const handleClose = useCallback(() => {
+    setAnchorEl(null);
+  }, []);
 
   return (
     <>
@@ -59,7 +64,7 @@ export default function AccountPopover() {
           width: 40,
           height: 40,
           background: (theme) => alpha(theme.palette.grey[500], 0.08),
-          ...(open && {
+          ...(anchorEl && {
             background: (theme) =>
               `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
           }),
@@ -79,8 +84,8 @@ export default function AccountPopover() {
       </IconButton>
 
       <Popover
-        open={!!open}
-        anchorEl={open}
+        open={!!anchorEl}
+        anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -103,13 +108,10 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         {MENU_OPTIONS.map((option) => (
-          <MenuItem key={option.label} onClick={handleClose}>
-             <Icon icon={option.icon} width={24} height={24} /> 
-            {option.label}
-          </MenuItem>
+          <AccountMenuItem key={option.label} option={option} onClick={handleClose} />
         ))}
 
-        <Divider sx={{ borderStyle: 'dashed', m: 0}} />
+        <Divider sx={{ borderStyle: 'dashed', m: 0 }} />
 
         <MenuItem
           disableRipple

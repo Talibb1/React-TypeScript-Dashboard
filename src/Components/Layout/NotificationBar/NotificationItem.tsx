@@ -1,29 +1,40 @@
-import { Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography } from '@mui/material';
-import { Notification } from './Types';
-import { renderContent } from './RenderContent';
-import Iconify from '../../UI/iconify';
-import { fToNow } from '../../../utils/format-time';
+import { memo, useCallback } from "react";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+
+import { Notification } from "./Types";
+import { renderContent } from "./RenderContent";
+import Iconify from "../../UI/iconify";
+import { fToNow } from "../../../utils/format-time";
 
 interface NotificationItemProps {
   notification: Notification;
 }
 
-export default function NotificationItem({ notification }: NotificationItemProps) {
-  const { avatar, title } = renderContent(notification);
+const NotificationItem = memo(({ notification }: NotificationItemProps) => {
+  const renderAvatarAndTitle = useCallback(() => {
+    const { avatar, title } = renderContent(notification);
+    return { avatar, title };
+  }, [notification]);
+
+  const { avatar, title } = renderAvatarAndTitle();
 
   return (
     <ListItemButton
       sx={{
         py: 1.5,
         px: 2.5,
-        mt: '1px',
+        mt: "1px",
         ...(notification.isUnRead && {
-          bgcolor: 'action.selected',
+          bgcolor: "action.selected",
         }),
       }}
     >
       <ListItemAvatar>
-        <Avatar sx={{ bgcolor: 'background.neutral' }}>{avatar}</Avatar>
+        <Avatar sx={{ bgcolor: "background.neutral" }}>{avatar}</Avatar>
       </ListItemAvatar>
       <ListItemText
         primary={title}
@@ -32,16 +43,21 @@ export default function NotificationItem({ notification }: NotificationItemProps
             variant="caption"
             sx={{
               mt: 0.5,
-              display: 'flex',
-              alignItems: 'center',
-              color: 'text.disabled',
+              display: "flex",
+              alignItems: "center",
+              color: "text.disabled",
             }}
           >
-            <Iconify icon="eva:clock-outline" sx={{ mr: 0.5, width: 16, height: 16 }} />
+            <Iconify
+              icon="eva:clock-outline"
+              sx={{ mr: 0.5, width: 16, height: 16 }}
+            />
             {fToNow(notification.createdAt)}
           </Typography>
         }
-        />
-        </ListItemButton>
+      />
+    </ListItemButton>
   );
-}
+});
+
+export default NotificationItem;

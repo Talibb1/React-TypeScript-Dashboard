@@ -2,7 +2,7 @@ import { set, sub } from 'date-fns';
 import { faker } from '@faker-js/faker';
 import { Notification } from './Types';
 
-export const NOTIFICATIONS: Notification[] = [
+export const NOTIFICATIONSDATA: Notification[] = [
   {
     id: faker.string.uuid(),
     title: 'Your order is placed',

@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useCallback, memo } from 'react';
 
 import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
@@ -33,16 +33,28 @@ const LANGS: LangOption[] = [
 
 // ----------------------------------------------------------------------
 
+const LanguageMenuItem = memo(({ option, selected, onClose }: { option: LangOption, selected: boolean, onClose: () => void }) => (
+  <MenuItem
+    key={option.value}
+    selected={selected}
+    onClick={onClose}
+    sx={{ typography: 'body2', py: 1 }}
+  >
+    <Box component="img" alt={option.label} src={option.icon} sx={{ width: 28, mr: 2 }} />
+    {option.label}
+  </MenuItem>
+));
+
 export default function LanguagePopover() {
-  const [open, setOpen] = useState<HTMLElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const handleOpen = (event: MouseEvent<HTMLElement>) => {
-    setOpen(event.currentTarget);
-  };
+  const handleOpen = useCallback((event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
 
-  const handleClose = () => {
-    setOpen(null);
-  };
+  const handleClose = useCallback(() => {
+    setAnchorEl(null);
+  }, []);
 
   return (
     <>
@@ -51,7 +63,7 @@ export default function LanguagePopover() {
         sx={{
           width: 40,
           height: 40,
-          ...(open && {
+          ...(anchorEl && {
             bgcolor: 'action.selected',
           }),
         }}
@@ -60,31 +72,19 @@ export default function LanguagePopover() {
       </IconButton>
 
       <Popover
-        open={!!open}
-        anchorEl={open}
+        open={!!anchorEl}
+        anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: {
-            p: 0,
-            mt: 1,
-            ml: 0.75,
-            width: 180,
-          },
-        }}
       >
         {LANGS.map((option) => (
-          <MenuItem
+          <LanguageMenuItem
             key={option.value}
+            option={option}
             selected={option.value === LANGS[0].value}
-            onClick={() => handleClose()}
-            sx={{ typography: 'body2', py: 1 }}
-          >
-            <Box component="img" alt={option.label} src={option.icon} sx={{ width: 28, mr: 2 }} />
-
-            {option.label}
-          </MenuItem>
+            onClose={handleClose}
+          />
         ))}
       </Popover>
     </>

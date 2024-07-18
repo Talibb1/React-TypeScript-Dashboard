@@ -4,13 +4,9 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-
 import { useResponsive } from '../../../Hooks/use-responsive';
-
 import { bgBlur } from '../../../Theme/css';
-
 import Iconify from '../../UI/iconify';
-
 import Searchbar from '../SearchBar/searchbar';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from '../Account/account-popover';
